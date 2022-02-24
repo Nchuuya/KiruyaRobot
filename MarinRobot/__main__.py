@@ -55,7 +55,6 @@ from telegram.ext import (
 )
 from telegram.ext.dispatcher import DispatcherHandlerStop, run_async
 from telegram.utils.helpers import escape_markdown
-from MarinRobot.modules.language import gs
 
 
 def get_readable_time(seconds: int) -> str:
