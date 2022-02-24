@@ -8,12 +8,12 @@ import sys
 import traceback
 
 from sqlalchemy.sql.expression import text, update
-import HiroRobot.modules.sql.users_sql as sql
+import MarinRobot.modules.sql.users_sql as sql
 from sys import argv
 from typing import Optional
 from telegram import __version__ as peler
 from platform import python_version as memek
-from HiroRobot import (
+from MarinRobot import (
     ALLOW_EXCL,
     CERT_PATH,
     DONATION_LINK,
@@ -21,7 +21,7 @@ from HiroRobot import (
     OWNER_ID,
     PORT,
     SUPPORT_CHAT,
-    TOKEN,
+    TOKEN,!
     URL,
     WEBHOOK,
     SUPPORT_CHAT,
@@ -34,9 +34,9 @@ from HiroRobot import (
 
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
-from HiroRobot.modules import ALL_MODULES
-from HiroRobot.modules.helper_funcs.chat_status import is_user_admin
-from HiroRobot.modules.helper_funcs.misc import paginate_modules
+from MarinRobot.modules import ALL_MODULES
+from MarinRobot.modules.helper_funcs.chat_status import is_user_admin
+from MarinRobot.modules.helper_funcs.misc import paginate_modules
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
 from telegram.error import (
     BadRequest,
@@ -55,7 +55,7 @@ from telegram.ext import (
 )
 from telegram.ext.dispatcher import DispatcherHandlerStop, run_async
 from telegram.utils.helpers import escape_markdown
-from HiroRobot.modules.language import gs
+from MarinRobot.modules.language import gs
 
 
 def get_readable_time(seconds: int) -> str:
@@ -83,7 +83,7 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-Hiro_IMG = "https://telegra.ph/file/6d3e3ef24f64fb6e35df0.jpg"
+Marin_IMG = "https://telegra.ph/file/6d3e3ef24f64fb6e35df0.jpg"
 
 PM_START_TEXT = """
 🌸══════「 [{}](https://telegra.ph/file/ccc9b76512bfdda7036f0.jpg) 」══════🌸
@@ -115,7 +115,7 @@ CHAT_SETTINGS = {}
 USER_SETTINGS = {}
 
 for module_name in ALL_MODULES:
-    imported_module = importlib.import_module("HiroRobot.modules." + module_name)
+    imported_module = importlib.import_module("MarinRobot.modules." + module_name)
     if not hasattr(imported_module, "__mod_name__"):
         imported_module.__mod_name__ = imported_module.__name__
 
@@ -229,7 +229,7 @@ def start(update: Update, context: CallbackContext):
                                 text=gs(chat.id, "add_bot_to_group_button"), url="t.me/NezukoXRobot?startgroup=new"),
                         ],
                         [
-                            InlineKeyboardButton(text=gs(chat.id, "about_button"), callback_data="Hiro_"),
+                            InlineKeyboardButton(text=gs(chat.id, "about_button"), callback_data="Marin_"),
                             InlineKeyboardButton(text=gs(chat.id, "inline_button"), switch_inline_query_current_chat=""),
                         ],
                         [
@@ -387,10 +387,10 @@ def help_button(update, context):
         pass
 
 
-def Hiro_about_callback(update, context):
+def Marin_about_callback(update, context):
     query = update.callback_query
     chat = update.effective_chat
-    if query.data == "Hiro_":
+    if query.data == "Marin_":
         query.message.edit_text(
             text=gs(chat.id, "pm_about_text"),
             parse_mode=ParseMode.MARKDOWN,
@@ -398,23 +398,23 @@ def Hiro_about_callback(update, context):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(text="Admins", callback_data="Hiro_admin"),
-                        InlineKeyboardButton(text=gs(chat.id, "notes_button"), callback_data="Hiro_notes"),
+                        InlineKeyboardButton(text="Admins", callback_data="Marin_admin"),
+                        InlineKeyboardButton(text=gs(chat.id, "notes_button"), callback_data="Marin_notes"),
                     ],
                     [
-                        InlineKeyboardButton(text=gs(chat.id, "support_chat_link_button"), callback_data="Hiro_support"),
-                        InlineKeyboardButton(text="Credits", callback_data="Hiro_credit"),
+                        InlineKeyboardButton(text=gs(chat.id, "support_chat_link_button"), callback_data="Marin_support"),
+                        InlineKeyboardButton(text="Credits", callback_data="Marin_credit"),
                     ],
                     [
-                        InlineKeyboardButton(text=gs(chat.id, "source_button"), url="https://github.com/shiinobu/HiroRobot"),
+                        InlineKeyboardButton(text=gs(chat.id, "source_button"), url="https://github.com/Yoriichi-Tsugikuni/KiruyaRobot"),
                     ],
                     [
-                    InlineKeyboardButton(text=gs(chat.id, "back_button"), callback_data="Hiro_back"),
+                    InlineKeyboardButton(text=gs(chat.id, "back_button"), callback_data="Marin_back"),
                     ]
                 ]
             ),
         )
-    elif query.data == "Hiro_back":
+    elif query.data == "Marin_back":
         first_name = update.effective_user.first_name
         uptime = get_readable_time((time.time() - StartTime))
         query.message.edit_text(
@@ -428,14 +428,14 @@ def Hiro_about_callback(update, context):
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
-                            InlineKeyboardButton(text=gs(chat.id, "about_button"), callback_data="Hiro_"),
+                            InlineKeyboardButton(text=gs(chat.id, "about_button"), callback_data="Marin_"),
                         ],
                         [
                             InlineKeyboardButton(text=gs(chat.id, "help_button"), callback_data="help_back"),
                             InlineKeyboardButton(text=gs(chat.id, "inline_button"), switch_inline_query_current_chat=""),
                         ],
                         [
-                            InlineKeyboardButton(text=gs(chat.id, "add_bot_to_group_button"), url="t.me/Hiroxbot?startgroup=new"),
+                            InlineKeyboardButton(text=gs(chat.id, "add_bot_to_group_button"), url="t.me/MarinRobot?startgroup=new"),
                         ]
                     ]
                 ),
@@ -444,7 +444,7 @@ def Hiro_about_callback(update, context):
                 disable_web_page_preview=False,
         )
 
-    elif query.data == "Hiro_admin":
+    elif query.data == "Marin_admin":
         query.message.edit_text(
             text=gs(chat.id, "pm_about_admin_text"),
             parse_mode=ParseMode.MARKDOWN,
@@ -452,25 +452,25 @@ def Hiro_about_callback(update, context):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(text=gs(chat.id, "back_button"), callback_data="Hiro_"),
+                        InlineKeyboardButton(text=gs(chat.id, "back_button"), callback_data="Marin_"),
                     ]
                 ]
             ),
         )
 
-    elif query.data == "Hiro_notes":
+    elif query.data == "Marin_notes":
         query.message.edit_text(
             text=gs(chat.id, "pm_about_notes_text"),
             parse_mode=ParseMode.MARKDOWN,
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(text=gs(chat.id, "back_button"), callback_data="Hiro_"),
+                        InlineKeyboardButton(text=gs(chat.id, "back_button"), callback_data="Marin_"),
                     ]
                 ]
             ),
         )
-    elif query.data == "Hiro_support":
+    elif query.data == "Marin_support":
         query.message.edit_text(
             text=gs(chat.id, "pm_about_support_text"),
             parse_mode=ParseMode.MARKDOWN,
@@ -481,14 +481,14 @@ def Hiro_about_callback(update, context):
                         InlineKeyboardButton(text=gs(chat.id, "updates_channel_link_button"), url="https://t.me/machinaxupdate"),
                     ],
                     [
-                        InlineKeyboardButton(text=gs(chat.id, "back_button"), callback_data="Hiro_"),
+                        InlineKeyboardButton(text=gs(chat.id, "back_button"), callback_data="Marin_"),
                     ]
                 ]
             ),
         )
 
 
-    elif query.data == "Hiro_credit":
+    elif query.data == "Marin_credit":
         query.message.edit_text(
             text=gs(chat.id, "pm_about_credit_text"),
             parse_mode=ParseMode.MARKDOWN,
@@ -502,7 +502,7 @@ def Hiro_about_callback(update, context):
                         InlineKeyboardButton(text="TheHamkerCat", url="https://github.com/TheHamkerCat"),
                     ],
                     [
-                        InlineKeyboardButton(text=gs(chat.id, "back_button"), callback_data="Hiro_"),
+                        InlineKeyboardButton(text=gs(chat.id, "back_button"), callback_data="Marin_"),
                     ]
                 ]
             ),
@@ -523,7 +523,7 @@ def Source_about_callback(update, context):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(text=gs(chat.id, "back_button"), callback_data="Hiro_"),
+                        InlineKeyboardButton(text=gs(chat.id, "back_button"), callback_data="Marin_"),
                     ]
                 ]
             ),
@@ -541,14 +541,14 @@ def Source_about_callback(update, context):
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
-                            InlineKeyboardButton(text=gs(chat.id, "about_button"), callback_data="Hiro_"),
+                            InlineKeyboardButton(text=gs(chat.id, "about_button"), callback_data="Marin_"),
                         ],
                         [
                             InlineKeyboardButton(text=gs(chat.id, "help_button"), callback_data="help_back"),
                             InlineKeyboardButton(text=gs(chat.id, "inline_button"), switch_inline_query_current_chat=""),
                         ],
                         [
-                            InlineKeyboardButton(text=gs(chat.id, "add_bot_to_group_button"), url="t.me/Hiroxbot?startgroup=new"),
+                            InlineKeyboardButton(text=gs(chat.id, "add_bot_to_group_button"), url="t.me/MarinRobot?startgroup=new"),
                         ]
                     ]
                 ),
@@ -860,7 +860,7 @@ def main():
     )
 
     about_callback_handler = CallbackQueryHandler(
-        Hiro_about_callback, pattern=r"Hiro_", run_async=True
+        Marin_about_callback, pattern=r"Marin_", run_async=True
     )
 
     source_callback_handler = CallbackQueryHandler(
